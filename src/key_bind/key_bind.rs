@@ -1,12 +1,8 @@
-pub fn hello() {
-    println!("Hello from key bind");
-}
-
-/* use crossterm::{
+use crossterm::{
     event::{self, KeyCode, KeyEvent},
     terminal::{self, ClearType},
 };
-fn main() {
+fn detect() {
     terminal::enable_raw_mode().expect("failed to enable mode");
     loop {
         if event::poll(std::time::Duration::from_millis(100)).expect("Polling for events failed") {
@@ -34,4 +30,7 @@ fn main() {
     terminal::disable_raw_mode().expect("Failed to disable raw mode");
     println!("{}", terminal::Clear(ClearType::All));
 }
- */
+
+pub fn hello() {
+    println!("Hello from key bind");
+}

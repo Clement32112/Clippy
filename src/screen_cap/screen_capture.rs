@@ -1,6 +1,6 @@
 use lodepng::{encode_file, Encoder};
 use scrap::{Capturer, Display};
-use std::{error, fs::File, io::ErrorKind::WouldBlock, io::Write, thread, time};
+use std::{fs::File, io::ErrorKind::WouldBlock, io::Write, thread, time};
 
 pub fn snap() {
     let display = Display::primary().expect("Failed to get the primary display.");
@@ -13,7 +13,6 @@ pub fn snap() {
 
     let mut capture: Capturer = Capturer::new(display).expect("Failed to create capturer.");
     let (w, h) = (capture.width(), capture.height());
-    let mut output_file = File::create("./output.png").expect("Failed to create output file.");
 
     loop {
         let frame = match capture.frame() {
@@ -29,9 +28,25 @@ pub fn snap() {
         };
 
         // Frame has been gotten;
+        let mut encoder: Encoder = Encoder::new();
+        let img = match encoder.encode(&frame, w, h) {
+            Ok(img) => img,
+            Err(error) => {
+                panic!("Error:{}", error);
+            }
+        };
+        //Ouput is blue
+        let mut output_file = File::create("./output.png").expect("Failed to create output file.");
+        output_file.write_all(&img).expect("Failed to outputfile");
 
+        // More accurate for some reason
         encode_file("./encode.png", &frame, w, h, lodepng::ColorType::BGRA, 8)
-            .expect("Failed to export image");
+            .expect("Failed to output file");
+
         break;
     }
+}
+
+pub fn rec() {
+    todo!();
 }
