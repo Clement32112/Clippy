@@ -7,3 +7,6 @@ edition = "2021"
 
 [dependencies]
 crossterm = "0.27.0"
+lodepng = "3.9.1"
+repng = "0.2.2"
+scrap = "0.5.0"
